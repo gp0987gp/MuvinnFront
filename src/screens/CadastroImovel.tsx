@@ -1,7 +1,7 @@
 import axios from "axios";
 import React, { useState } from "react";
-import { Image, StatusBar, StyleSheet, Text, TextInput, Touchable, TouchableOpacity, View } from "react-native";
-import { ScrollView } from "react-native-gesture-handler";
+import { ScrollView, StatusBar, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
+import {} from "react-native-paper"
 import Footer from "../components/Footer";
 import Header from "../components/Header";
 
