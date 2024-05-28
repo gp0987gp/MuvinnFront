@@ -9,7 +9,7 @@ function Home() {
   const navigation = useNavigation();
 
   return (
-    <ImageBackground source={require("../assets/images/background1.png")} style={styles.image}>
+    <ImageBackground source={require("../assets/images/background4.png")} style={styles.image}>
       <View style={{ flex: 1, flexDirection: 'column' }}>
         <Header />
         <ScrollView showsVerticalScrollIndicator={false} style={{ flex: 1 }}>
@@ -19,11 +19,12 @@ function Home() {
               <Text style={styles.textWelcome}>A casa que você quer está aqui.</Text>
             </View>
             <Card style={{ backgroundColor: '#66666e', width: 360, justifyContent: 'center'}} >
-              <Card.Title title="Card Title" titleStyle={styles.titleColor}/>
-              <Card.Cover source={ require("../assets/images/cardImage.png")}/>
+
+              <Card.Cover source={ require("../assets/images/cardImage2.png")}/>
               <Card.Actions>
+              <Text style={styles.cardTextColor}>Explore mais de 7 milhões de casas!</Text>
                 <Button style={styles.buttonColor} onPress={() => navigation.navigate('Listagem')}>
-                  <Text style={styles.buttonText}>Ver mais</Text>
+                  <Text style={styles.buttonText}>Ver mais!</Text>
                 </Button>
               </Card.Actions>
             </Card>
@@ -65,6 +66,10 @@ const styles = StyleSheet.create({
   },
   subtitleColor: {
     color: '#f4f4f6'
+  },
+  cardTextColor: {
+    color: '#f4f4f6',
+    fontWeight: 'bold'
   }
 });
 
