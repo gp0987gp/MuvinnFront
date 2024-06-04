@@ -10,15 +10,15 @@ import {
   StatusBar,
   StyleSheet,
   Text,
-  TouchableOpacity,
   View,
 } from 'react-native';
 import { Button, Card } from 'react-native-paper';
 import Footer from '../components/Footer';
+import EditarAnuncio from './EditarAnuncio';
 
-const renderItem = ({ item, handleEdit, handleDelete }: { item: Anuncio, handleEdit: (item: Anuncio) => void, handleDelete: (id: string) => void }) => (
+const renderItem = ({ item, handleDelete }: { item: Anuncio, handleDelete: (id: string) => void }) => (
   <View style={styles.item}>
-    <Card style={{ backgroundColor: '#9999a1' }}>
+    <Card style={{ backgroundColor: '#9999a1'}}>
       <Card.Title title="Casa rustica " subtitle="Mais informações abaixo" titleStyle={styles.titleColor} subtitleStyle={styles.subtitleColor} />
       <Card.Content>
         <Text style={styles.textTitle}>Estado: {item.estado}</Text>
@@ -30,10 +30,10 @@ const renderItem = ({ item, handleEdit, handleDelete }: { item: Anuncio, handleE
         <Text style={styles.textTitle}>Quartos: {item.quartos}</Text>
         <Text style={styles.textTitle}>Vagas: {item.vagas}</Text>
         <Text style={styles.textTitle}>Área do imovel: {item.area_do_imovel}m²</Text>
-        <Image source={item.image? { uri: item.image } : require('../assets/images/house.png')} style={styles.image} />
+        <Image source={item.image? {uri:item.image}: require('../assets/images/house.png')}  style={styles.image} />
       </Card.Content>
       <Card.Actions>
-        <Button buttonColor='darkblue' onPress={() => handleEdit(item)}>
+        <Button buttonColor='darkblue' onPress={() => navigation.navigate ('EditarAnuncio', {item})}>
           <Text style={styles.textButton}>Editar</Text>
         </Button>
         <Button buttonColor='darkred' onPress={() => handleDelete(item.id)}>
@@ -44,6 +44,8 @@ const renderItem = ({ item, handleEdit, handleDelete }: { item: Anuncio, handleE
   </View>
 );
 
+const navigation = useNavigation();
+
 function Listagem(): React.JSX.Element {
   const [anuncio, setAnuncio] = useState<Anuncio[]>([]);
   const [erro, setErro] = useState<string>('');
@@ -51,7 +53,7 @@ function Listagem(): React.JSX.Element {
   useEffect(() => {
     async function fetchData() {
       try {
-        const response = await axios.get('http://10.137.11.212:8000/api/imovel/retornarTodos');
+        const response = await axios.get('http://10.137.11.211:8000/api/imovel/retornarTodos');
         setAnuncio(response.data.data);
         console.log(response.data.data);
       } catch (error) {
@@ -77,7 +79,7 @@ function Listagem(): React.JSX.Element {
           text: "Deletar",
           onPress: async () => {
             try {
-              await axios.delete(`http://10.137.11.211:8000/api/imovel/delete/${id}`);
+              await axios.delete(`http://10.137.11.211:8000/api/imovel/delete/{id}`);
               const newAnuncio = anuncio.filter((item) => item.id!== id);
               setAnuncio(newAnuncio);
               Alert.alert("Anúncio deletado com sucesso.");
@@ -89,10 +91,6 @@ function Listagem(): React.JSX.Element {
         }
       ]
     );
-  };
-
-  const handleEdit = (item: Anuncio) => {
-    navigation.navigate('EditarAnuncio', { item });
   };
 
   return (
@@ -107,7 +105,7 @@ function Listagem(): React.JSX.Element {
         )}
         showsVerticalScrollIndicator={false}
         data={anuncio}
-        renderItem={({ item }) => renderItem({ item, handleEdit, handleDelete })}
+        renderItem={({ item }) => renderItem({ item, handleDelete })}
         keyExtractor={(item) => item.id.toString()}
       />
       <Footer/>
